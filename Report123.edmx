@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="thas01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="THAS_CONNECT_PopulateWOKittable_WOClosedLines" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
+        <Function Name="THAS_CONNECT_PopulateWOKittable_WOOpenLines" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
+        <Function Name="THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
+        <Function Name="THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
+        <Function Name="THAS_CONNECT_WOKittable_GoodStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
+        <EntityContainer Name="thas01ModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="thas01Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="thas01ReportEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="THAS_CONNECT_PopulateWOKittable_WOClosedLines" />
+          <FunctionImport Name="THAS_CONNECT_PopulateWOKittable_WOOpenLines" />
+          <FunctionImport Name="THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities" ReturnType="Collection(thas01Model.THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities_Result)" />
+          <FunctionImport Name="THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities" ReturnType="Collection(thas01Model.THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities_Result)" />
+          <FunctionImport Name="THAS_CONNECT_WOKittable_GoodStock" ReturnType="Collection(thas01Model.THAS_CONNECT_WOKittable_GoodStock_Result)" />
+        </EntityContainer>
+        <ComplexType Name="THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities_Result">
+          <Property Type="String" Name="WorksOrderNumber" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="WOTotalPlannedQty" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities_Result">
+          <Property Type="String" Name="WorksOrderNumber" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="WOTotalPlannedQty" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="THAS_CONNECT_WOKittable_GoodStock_Result">
+          <Property Type="String" Name="PartNumber" Nullable="true" MaxLength="25" />
+          <Property Type="Decimal" Name="On_Hand_Batch_Qty" Nullable="true" Precision="38" Scale="6" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="thas01ModelStoreContainer" CdmEntityContainer="thas01ReportEntities" >
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_PopulateWOKittable_WOClosedLines" FunctionName="thas01Model.Store.THAS_CONNECT_PopulateWOKittable_WOClosedLines" />
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_PopulateWOKittable_WOOpenLines" FunctionName="thas01Model.Store.THAS_CONNECT_PopulateWOKittable_WOOpenLines" />
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities" FunctionName="thas01Model.Store.THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="thas01Model.THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities_Result">
+                <ScalarProperty Name="WorksOrderNumber" ColumnName="WorksOrderNumber" />
+                <ScalarProperty Name="WOTotalPlannedQty" ColumnName="WOTotalPlannedQty" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities" FunctionName="thas01Model.Store.THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="thas01Model.THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities_Result">
+                <ScalarProperty Name="WorksOrderNumber" ColumnName="WorksOrderNumber" />
+                <ScalarProperty Name="WOTotalPlannedQty" ColumnName="WOTotalPlannedQty" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_WOKittable_GoodStock" FunctionName="thas01Model.Store.THAS_CONNECT_WOKittable_GoodStock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="thas01Model.THAS_CONNECT_WOKittable_GoodStock_Result">
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="On_Hand_Batch_Qty" ColumnName="On Hand Batch Qty" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

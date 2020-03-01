@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ConnectProdDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="WOKittableResultSet">
+          <Key>
+            <PropertyRef Name="WOKittable_ID" />
+          </Key>
+          <Property Name="WOKittable_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="bigint" Nullable="false" />
+          <Property Name="WONumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ResponsibilityCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="WOTotalPlannedQty" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalPlannedQty" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalActualQty" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalActualKitNeed" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalKittable" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CommercialNotes" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BatchNotes" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PartsNotFound" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="OverKitted" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="DateRun" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ConnectProdDbModelStoreContainer">
+          <EntitySet Name="WOKittableResultSet" EntityType="Self.WOKittableResultSet" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConnectProdDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="WOKittableResultSet">
+          <Key>
+            <PropertyRef Name="WOKittable_ID" />
+          </Key>
+          <Property Name="WOKittable_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int64" Nullable="false" />
+          <Property Name="WONumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ResponsibilityCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WOTotalPlannedQty" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalPlannedQty" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalActualQty" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalActualKitNeed" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalKittable" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CommercialNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BatchNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PartsNotFound" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="OverKitted" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="DateRun" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityContainer Name="ConnectProdDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="WOKittableResultSets" EntityType="Self.WOKittableResultSet" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConnectProdDbModelStoreContainer" CdmEntityContainer="ConnectProdDbEntities">
+          <EntitySetMapping Name="WOKittableResultSets">
+            <EntityTypeMapping TypeName="ConnectProdDbModel.WOKittableResultSet">
+              <MappingFragment StoreEntitySet="WOKittableResultSet">
+                <ScalarProperty Name="WOKittable_ID" ColumnName="WOKittable_ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="WONumber" ColumnName="WONumber" />
+                <ScalarProperty Name="ResponsibilityCode" ColumnName="ResponsibilityCode" />
+                <ScalarProperty Name="WOTotalPlannedQty" ColumnName="WOTotalPlannedQty" />
+                <ScalarProperty Name="TotalPlannedQty" ColumnName="TotalPlannedQty" />
+                <ScalarProperty Name="TotalActualQty" ColumnName="TotalActualQty" />
+                <ScalarProperty Name="TotalActualKitNeed" ColumnName="TotalActualKitNeed" />
+                <ScalarProperty Name="TotalKittable" ColumnName="TotalKittable" />
+                <ScalarProperty Name="CommercialNotes" ColumnName="CommercialNotes" />
+                <ScalarProperty Name="BatchNotes" ColumnName="BatchNotes" />
+                <ScalarProperty Name="PartsNotFound" ColumnName="PartsNotFound" />
+                <ScalarProperty Name="OverKitted" ColumnName="OverKitted" />
+                <ScalarProperty Name="DateRun" ColumnName="DateRun" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
