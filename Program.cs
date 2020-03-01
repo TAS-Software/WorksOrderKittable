@@ -30,19 +30,19 @@ namespace WorksOrderKittable
                 //check table for existing run for this day
                 var todayDate = DateTime.Now.Date;
                 var checkUID = cDb.WOKittableResultSets.Count() > 0 ? cDb.WOKittableResultSets.Select(x => x.UID).Max() : 0;
-                //var checkDate = cDb.WOKittableResultSets.Count() > 0 ? cDb.WOKittableResultSets.Select(x => x.DateRun).Max().Date : DateTime.MinValue.Date;
-                //if (checkDate == todayDate)
-                //{
-                //    cDb.WOKittableResultSets.RemoveRange(cDb.WOKittableResultSets.Where(x => x.DateRun == todayDate));
-                //    cDb.SaveChanges();
+                var checkDate = cDb.WOKittableResultSets.Count() > 0 ? cDb.WOKittableResultSets.Select(x => x.DateRun).Max().Date : DateTime.MinValue.Date;
+                if (checkDate == todayDate)
+                {
+                    cDb.WOKittableResultSets.RemoveRange(cDb.WOKittableResultSets.Where(x => x.DateRun == todayDate));
+                    cDb.SaveChanges();
 
-                //}
+                }
                 var setUID = ++checkUID;
                 using (var crdb = new ConnectReportDbEntities())
                 {
                     crdb.Database.CommandTimeout = 40000;
                     //Clear Tables
-                    crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOOpenLines");
+                    crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOOpenLines"); 
                     crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOClosedLines");
                     //End Clear Tables
                     using (var rdb = new thas01ReportEntities())
@@ -52,17 +52,21 @@ namespace WorksOrderKittable
                         try
                         {
                             // Run Inserts
-                            rdb.THAS_CONNECT_PopulateWOKittable_WOOpenLines();
-                            rdb.THAS_CONNECT_PopulateWOKittable_WOClosedLines();
+                            rdb.THAS_CONNECT_PopulateWOKittable_WOOpenLines(); 
+                            rdb.THAS_CONNECT_PopulateWOKittable_WOClosedLines(); 
 
                             // End Inserts
                             var allWOLines = crdb.WOKittable_WOOpenLines.ToList();
-                            var allWOQuantities = rdb.THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities().ToList();
+                            var allWOQuantities = rdb.THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities();
+                            //var allWOLines = new List<WOKittable_WOOpenLines>();
+                            //var allWOQuantities = new List<THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities_Result>();
                             Console.WriteLine("All WO Lines & WO Quantities Retreived...");
 
                             //Closed Queries
+                            //var closedWOLines = crdb.WOKittable_WOClosedLines.ToList();
                             var closedWOLines = crdb.WOKittable_WOClosedLines.ToList();
                             var closedWOQuantities = rdb.THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities().ToList();
+                            //var closedWOQuantities = rdb.THAS_CONNECT_WOKittable_GetAllClosedPlannedQuantities().ToList();
                             Console.WriteLine("All Closed WO Lines & Closed WO Quantities Retreived...");
                             //End Closed Queries
                             
@@ -78,7 +82,7 @@ namespace WorksOrderKittable
                                 var kittable = 0.0m;
                                 var actuallyKitted = 0.0m;
                                 var PNF = 0.0m;
-                                var totalActualKittedNeeded = wo.Sum(z=>z.ActualKitNeed);
+                                var totalActualKittedNeeded = wo.Sum(z => z.ActualKitNeed);
                                 var totalActualKitted = wo.Sum(z => z.ActualIssueQty);
                                 var overkitted = totalActualKitted - totalActualKittedNeeded;
                                 foreach (var woLine in wo)
@@ -189,16 +193,16 @@ namespace WorksOrderKittable
                                 export.OverKitted = 0;
                                 exports.Add(export);
                             });
-                            //try
-                            //{
-                            //    //copy to db table
-                            //    CopyWOKittableToDB(exports, setUID, todayDate);
-                            //    //end copy
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    Console.WriteLine(ex.Message + ex.InnerException);
-                            //}
+                            try
+                            {
+                                //copy to db table
+                                CopyWOKittableToDB(exports, setUID, todayDate);
+                                //end copy
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message + ex.InnerException);
+                            }
                             string excelName = "WOKittableReport_" + DateTime.Now.ToString("dd-MM-yy HH.mm.ss tt");
 
                             FileInfo fileInfo2;
