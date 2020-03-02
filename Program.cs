@@ -16,10 +16,13 @@ namespace WorksOrderKittable
             try
             {
                 GenerateWOKittableReport();
+                Console.WriteLine("Finished");
+              
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Failed: " + ex.Message + ex.InnerException);
+               
             }
         }
         public static void GenerateWOKittableReport()
@@ -42,8 +45,8 @@ namespace WorksOrderKittable
                 {
                     crdb.Database.CommandTimeout = 40000;
                     //Clear Tables
-                    crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOOpenLines"); 
-                    crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOClosedLines");
+                    //crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOOpenLines"); 
+                    //crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOClosedLines");
                     //End Clear Tables
                     using (var rdb = new thas01ReportEntities())
                     {
@@ -51,13 +54,14 @@ namespace WorksOrderKittable
                         //Open Queries
                         try
                         {
+                            Console.WriteLine("Begin Populate");
                             // Run Inserts
                             rdb.THAS_CONNECT_PopulateWOKittable_WOOpenLines(); 
-                            rdb.THAS_CONNECT_PopulateWOKittable_WOClosedLines(); 
-
+                            rdb.THAS_CONNECT_PopulateWOKittable_WOClosedLines();
+                            Console.WriteLine("Begin Retreival");
                             // End Inserts
                             var allWOLines = crdb.WOKittable_WOOpenLines.ToList();
-                            var allWOQuantities = rdb.THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities();
+                            var allWOQuantities = rdb.THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities().ToList();
                             //var allWOLines = new List<WOKittable_WOOpenLines>();
                             //var allWOQuantities = new List<THAS_CONNECT_WOKittable_GetAllOpenPlannedQuantities_Result>();
                             Console.WriteLine("All WO Lines & WO Quantities Retreived...");
@@ -70,13 +74,14 @@ namespace WorksOrderKittable
                             Console.WriteLine("All Closed WO Lines & Closed WO Quantities Retreived...");
                             //End Closed Queries
                             
-                            var goodPartStock = rdb.THAS_CONNECT_WOKittable_GoodStock();
+                            var goodPartStock = rdb.THAS_CONNECT_WOKittable_GoodStock().ToList();
 
                             var exports = new List<WOKittingGroupedExport>();
                             string regexPattern = @"\{\*?\\[^{}]+}|[{}]|\\\n?[A-Za-z]+\n?(?:-?\d+)?[ ]?";
                             Regex rgx = new Regex(regexPattern);
 
                             var kittingShortageList = new List<KittingShortage>();
+                            Console.WriteLine("Begin Foreach");
                             allWOLines.GroupBy(y => y.WorksOrderNumber).ToList().ForEach(wo =>
                             {
                                 var kittable = 0.0m;
@@ -175,7 +180,7 @@ namespace WorksOrderKittable
                                 export.OverKitted = overkitted;
                                 exports.Add(export);
                             });
-
+                            Console.WriteLine("Begin Closed");
                             closedWOLines.GroupBy(y => y.WorksOrderNumber).ToList().ForEach(wo =>
                             {
                                 var val = wo.Sum(x => x.PlannedIssueQty);
@@ -193,6 +198,7 @@ namespace WorksOrderKittable
                                 export.OverKitted = 0;
                                 exports.Add(export);
                             });
+                            Console.WriteLine("Begin Copy");
                             try
                             {
                                 //copy to db table
