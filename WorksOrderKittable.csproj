@@ -16,7 +16,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>\\thas-app04\AppFolder\WorksOrderKittableGenerator\</PublishUrl>
+    <PublishUrl>\\thas-app04\AppFolder\WorksOrderKittableGeneratorTest\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,7 +26,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>6</ApplicationRevision>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>12</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -111,6 +113,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\kittableLine.cs" />
     <Compile Include="Classes\KittingShortage.cs" />
     <Compile Include="Classes\WOKittingGroupedExport.cs" />
     <Compile Include="Classes\WOKittingResultSet.cs" />
@@ -178,6 +181,9 @@
     </Compile>
     <Compile Include="WOKittable_WOOpenLines.cs">
       <DependentUpon>ConnectReportDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WOLineKittableResultSet.cs">
+      <DependentUpon>ConnectProdDb.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

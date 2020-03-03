@@ -12,20 +12,22 @@ namespace WorksOrderKittable
     using System;
     using System.Collections.Generic;
     
-    public partial class WOKittable_WOOpenLines
+    public partial class WOLineKittableResultSet
     {
-        public long WOKittable_ID { get; set; }
-        public string WorksOrderNumber { get; set; }
+        public long WOLineKittable_ID { get; set; }
+        public long UID { get; set; }
+        public string WONumber { get; set; }
         public string RespCode { get; set; }
-        public string CompPartNumber { get; set; }
-        public string CompPG { get; set; }
         public decimal PlannedIssueQty { get; set; }
         public decimal ActualIssueQty { get; set; }
-        public bool IsFullyIssued { get; set; }
         public decimal ActualKitNeed { get; set; }
+        public System.DateTime PlannedIssueDate { get; set; }
+        public decimal Kittable { get; set; }
+        public decimal PNF { get; set; }
+        public decimal OverKitted { get; set; }
         public string CommercialNotes { get; set; }
         public string BatchNotes { get; set; }
-        public System.DateTime PlannedIssueDate { get; set; }
-        public decimal Stock { get; set; }
+        public System.DateTime DateRun { get; set; }
+        public string PartNumber { get; set; }
     }
 }

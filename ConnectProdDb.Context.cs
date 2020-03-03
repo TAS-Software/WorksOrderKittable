@@ -26,5 +26,6 @@ namespace WorksOrderKittable
         }
     
         public virtual DbSet<WOKittableResultSet> WOKittableResultSets { get; set; }
+        public virtual DbSet<WOLineKittableResultSet> WOLineKittableResultSets { get; set; }
     }
 }
