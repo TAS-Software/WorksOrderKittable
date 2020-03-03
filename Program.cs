@@ -267,7 +267,7 @@ namespace WorksOrderKittable
                             FileInfo fileInfo2;
                             string theDate2 = DateTime.Now.ToString("yyyyMMdd");
                             string theDateHours2 = DateTime.Now.ToString("yyyyMMdd HH.mm.ss");
-                            if (CreateDirectoryStructure(out fileInfo2, theDate2, theDateHours2, @"WOKittable", @"test", false)) //MRP Standup Reports
+                            if (CreateDirectoryStructure(out fileInfo2, theDate2, theDateHours2, @"WOKittable", @"MRP Standup Reports", false)) //MRP Standup Reports
                             {
                                 using (ExcelPackage excelPackage = new ExcelPackage(fileInfo2))
                                 {
@@ -358,20 +358,20 @@ namespace WorksOrderKittable
                 {
                     ++count;
                     var record = new WOLineKittableResultSet();
-                    record.WONumber = line.WONumber;
-                    record.DateRun = DateRun.Date;
-                    record.BatchNotes = line.BatchNotes;
-                    record.CommercialNotes = line.CommercialNotes;
-                    record.OverKitted = line.OverKitted;
-                    record.PNF = line.PNF;
-                    record.RespCode = line.RespCode;
-                    record.ActualKitNeed = line.ActualKitNeed;
-                    record.ActualIssueQty = line.ActualIssueQty;
-                    record.Kittable = line.Kittable;
-                    record.PlannedIssueQty = line.PlannedIssueQty;
-                    record.PlannedIssueDate = line.PlannedIssueDate;
                     record.UID = UID;
-
+                    record.WONumber = line.WONumber;
+                    record.PartNumber = line.PartNumber;
+                    record.RespCode = line.RespCode;
+                    record.PlannedIssueQty = line.PlannedIssueQty;
+                    record.ActualIssueQty = line.ActualIssueQty;
+                    record.ActualKitNeed = line.ActualKitNeed;
+                    record.PlannedIssueDate = line.PlannedIssueDate;
+                    record.Kittable = line.Kittable;
+                    record.PNF = line.PNF;
+                    record.OverKitted = line.OverKitted;
+                    record.CommercialNotes = line.CommercialNotes;
+                    record.BatchNotes = line.BatchNotes;
+                    record.DateRun = DateRun.Date;
                     connect = AddToContextWOLineKittable(connect, record, count, 500, true);
                 }
                 connect.SaveChanges();
