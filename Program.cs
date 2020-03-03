@@ -352,7 +352,8 @@ namespace WorksOrderKittable
             {
                 connect = new ConnectProdDbEntities();
                 connect.Configuration.AutoDetectChangesEnabled = false;
-
+                string regexPattern = @"\{\*?\\[^{}]+}|[{}]|\\\n?[A-Za-z]+\n?(?:-?\d+)?[ ]?";
+                Regex rgx = new Regex(regexPattern);
                 int count = 0;
                 foreach (var line in dataSet)
                 {
@@ -369,8 +370,8 @@ namespace WorksOrderKittable
                     record.Kittable = line.Kittable;
                     record.PNF = line.PNF;
                     record.OverKitted = line.OverKitted;
-                    record.CommercialNotes = line.CommercialNotes;
-                    record.BatchNotes = line.BatchNotes;
+                    record.BatchNotes = line.BatchNotes != null ? rgx.Replace(line.BatchNotes, "").Replace("\r", "").Replace("\n", "").ToLower() : "";
+                    record.CommercialNotes = line.CommercialNotes != null ? rgx.Replace(line.CommercialNotes, "").Replace("\r", "").Replace("\n", "").ToLower() : "";
                     record.DateRun = DateRun.Date;
                     connect = AddToContextWOLineKittable(connect, record, count, 500, true);
                 }
