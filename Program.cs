@@ -42,8 +42,8 @@ namespace WorksOrderKittable
 
                 }
                 var setUID = ++checkUID;
-                var checkLineUID = cDb.WOKittableResultSets.Count() > 0 ? cDb.WOKittableResultSets.Select(x => x.UID).Max() : 0;
-                var checkLineDate = cDb.WOKittableResultSets.Count() > 0 ? cDb.WOKittableResultSets.Select(x => x.DateRun).Max().Date : DateTime.MinValue.Date;
+                var checkLineUID = cDb.WOLineKittableResultSets.Count() > 0 ? cDb.WOLineKittableResultSets.Select(x => x.UID).Max() : 0;
+                var checkLineDate = cDb.WOLineKittableResultSets.Count() > 0 ? cDb.WOLineKittableResultSets.Select(x => x.DateRun).Max().Date : DateTime.MinValue.Date;
                 if (checkLineDate == todayDate)
                 {
                     cDb.WOLineKittableResultSets.RemoveRange(cDb.WOLineKittableResultSets.Where(x => x.DateRun == todayDate));
