@@ -31,6 +31,7 @@ namespace WorksOrderKittable
             Console.WriteLine("Starting Kittable Report Operation..." + DateTime.Now);
             using (var cDb = new ConnectProdDbEntities())
             {
+                cDb.Database.CommandTimeout = 400000;
                 //check table for existing run for this day
                 var todayDate = DateTime.Now.Date;
                 var checkUID = cDb.WOKittableResultSets.Count() > 0 ? cDb.WOKittableResultSets.Select(x => x.UID).Max() : 0;
@@ -53,14 +54,14 @@ namespace WorksOrderKittable
                 var setLineUID = ++checkLineUID;
                 using (var crdb = new ConnectReportDbEntities())
                 {
-                    crdb.Database.CommandTimeout = 40000;
+                    crdb.Database.CommandTimeout = 400000;
                     //Clear Tables
                     //crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOOpenLines"); 
                     //crdb.Database.ExecuteSqlCommand("truncate table WOKittable_WOClosedLines");
                     //End Clear Tables
                     using (var rdb = new thas01ReportEntities())
                     {
-                        rdb.Database.CommandTimeout = 40000;
+                        rdb.Database.CommandTimeout = 400000;
                         //Open Queries
                         try
                         {
@@ -99,7 +100,6 @@ namespace WorksOrderKittable
                             var woLineList = new List<WOLineKittableResultSet>();
 
                             var alreadyIssuedLines = allWOLines.Where(x => x.IsFullyIssued).ToList();
-                            
 
                             foreach (var woLine in alreadyIssuedLines)
                             {
@@ -283,7 +283,7 @@ namespace WorksOrderKittable
                         catch (Exception ex)
                         {
                             Console.WriteLine("Problem retreiving closed wo lines & quantities..." + ex.Message + ex.InnerException);
-                            return;
+                            SendMail("Failed Populate", "Failure");
                         }
                     }
                 }
